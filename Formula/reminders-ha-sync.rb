@@ -13,8 +13,8 @@
 class RemindersHaSync < Formula
   desc "Two-way sync between macOS Reminders and Home Assistant to-do lists"
   homepage "https://github.com/sabbaken/apple-reminders-sync-to-home-assistant"
-  url "https://github.com/sabbaken/apple-reminders-sync-to-home-assistant/archive/refs/tags/v0.3.0.tar.gz"
-  sha256 "a8955977c224c3b9dbf04a139387a9c3bf4cd33630c8887b0397b2ac84e894f6"
+  url "https://github.com/sabbaken/apple-reminders-sync-to-home-assistant/archive/refs/tags/v0.4.0.tar.gz"
+  sha256 "b9944fbd78e506a4b97f42203891ef7799515e0810f3b98a4bc0b790247e6dad"
   license "AGPL-3.0-only"
   head "https://github.com/sabbaken/apple-reminders-sync-to-home-assistant.git", branch: "master"
 
@@ -33,6 +33,9 @@ class RemindersHaSync < Formula
 
   def install
     bin.install "reminders_ha_sync.py" => "reminders-ha-sync"
+    system "/usr/bin/python3", "dev/build_calendar_helper.py", "--output", "build/Apple Calendar Sync.app"
+    libexec.install "build/Apple Calendar Sync.app"
+    (share/"reminders-ha-sync").install "custom_components"
     # The script is installed on its own, so keep the licence next to it.
     prefix.install "LICENSE"
   end
